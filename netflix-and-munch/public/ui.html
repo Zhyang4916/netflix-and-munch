@@ -1,0 +1,47 @@
+<!DOCTYPE html> 
+<html lang = "en">
+<head> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix & Munch</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1 class="title">Netflix & Munch</h1>
+        <nav>
+            <a href="#" id="nav-all-recipes">All Recipes</a>
+            <a href="#" id="nav-find-recipe">Find A Recipe</a>
+            <a href="#" id="nav-about-us">About Us</a>
+        </nav>
+    </header>
+    <main> 
+        <section id="homepage-main">
+            <div class="main-content">
+                <p class="main-sentence"> Delicious food for every movie night </p>
+                <div class="main-buttons">
+                    <button id="all-recipes-button" class="main-button">All Recipes</button>
+                    <button id="find-recipe-button" class="main-button">Find A Recipe</button>
+                    <button id="about-us-button" class="main-button">About Us</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="search" class="hidden">
+            <div class="search-container">
+                <h1>Find Your Iconic Recipe</h1>
+                <input type="text" id="movie-search" placeholder="Search for a recipe or movie title... (e.g., Harry Potter)">
+                <button id="search-button">Find Recipe</button>
+            </div>
+        </section>
+
+        <section id="results" class="hidden">
+            <h2>Recipe Results</h2>
+            <div id="recipe-results" class="recipe-container">
+                </div>
+        </section>
+
+    </main>
+    <script src="ux.js"></script>
+</body>
+</html>
