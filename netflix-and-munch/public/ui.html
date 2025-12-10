@@ -31,8 +31,8 @@
 
         <section id="search" class="hidden">
             <div class="search-container">
-                <h1>Find Your Iconic Recipe</h1>
-                <input type="text" id="movie-search" placeholder="Search for a recipe or movie title... (e.g., Harry Potter)">
+                <h1>Search for a recipe or movie title... (e.g. Harry Potter)</h1>
+                <input type="text" id="movie-search" placeholder="Find your next recipe">
                 <button id="search-button">Find Recipe</button>
             </div>
         </section>
@@ -40,11 +40,25 @@
         <section id="results" class="hidden">
             <h2>Recipe Results</h2>
             <div id="recipe-results" class="recipe-container">
+                <div id="single-recipe-details">
+                    <h3 id="recipe-movie-title"></h3>
+                    <img id="recipe-image" src="" alt="Recipe Photo">
+
+                    <h4>Ingredients</h4>
+                    <ul id="ingredients-list">
+                        </ul>
+
+                    <h4>Instructions</h4>
+                    <div id="instructions-container">
+                        </div>
                 </div>
         </section>
 
         <section id="all-recipes" class="hidden">
             <h2>All Recipes</h2>
+            <div id="filter-controls" style="margin-bottom: 20px;">
+                
+            </div>
             <div id="all-recipes-container">
             </div>
         </section>

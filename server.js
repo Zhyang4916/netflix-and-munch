@@ -24,8 +24,7 @@ app.get("/api/recipe", asyncHandler(async (req, res) => {
     }
     
     const movieMapping = await MovieMapping.findOne({
-        title: {$regex: new RegExp(`^${movieTitle}$`, 'i'
-        )}
+        title: {$regex: new RegExp(`^${movieTitle}$`, 'i')}
     });
 
     if (!movieMapping) {
@@ -55,38 +54,55 @@ app.get("/api/recipe", asyncHandler(async (req, res) => {
             ingredients.push(`${ingredient} — ${measure}`);
         }
     }
+
+    let formattedInstructions = meal.strInstructions;
+    if (formattedInstructions) {
+        formattedInstructions = formattedInstructions.replace(/\r\n/g, '\n');
+        const instructionSteps = formattedInstructions.split('\n').filter(step => step.trim() !== '');
+        formattedInstructions = instructionSteps.map((step, index) => 
+            `${index + 1}. ${step.trim()}`
+        ).join('\n\n');
+    }
+
     res.json({
         movie: movieMapping.title,
         foodName: meal.strMeal,
         image: meal.strMealThumb,
         cuisine: meal.strArea,
         cuisineTag: meal.strCategory,
-        instructions: meal.strInstructions,
+        instructions: formattedInstructions,
         ingredients
     });
 }));
 
 app.get("/api/all-recipes", asyncHandler(async (req, res) => {
     const movies = await MovieMapping.find();
-    const results = [];
 
-    for (const movie of movies) {
+    // Create a list of promises for concurrent API calls
+    const fetchPromises = movies.map(movie => {
         const apiURL = `https://www.themealdb.com/api/json/v1/1/search.php?s=${encodeURIComponent(movie.food)}`;
-        const apiResponse = await axios.get(apiURL);
-        const data = apiResponse.data;
+        return axios.get(apiURL);
+    });
 
-        if (!data.meals) continue;
+    // Wait for all promises to resolve in parallel
+    const apiResponses = await Promise.all(fetchPromises);
+
+    const results = apiResponses.map((response, index) => {
+        const data = response.data;
+        const movie = movies[index];
+        
+        if (!data.meals) return null; 
 
         const meal = data.meals[0];
 
-        results.push({
+        return {
             movie: movie.title,
             foodName: meal.strMeal,
             image: meal.strMealThumb,
             cuisine: meal.strArea,
             cuisineTag: meal.strCategory
-        });
-    }
+        };
+    }).filter(result => result !== null);
 
     res.json(results);
 }));
@@ -94,12 +110,10 @@ app.get("/api/all-recipes", asyncHandler(async (req, res) => {
 
 async function start() {
     await connectToDB();
-    return app.listen(3000, () => {
-        console.log("Listening on port 3000");
+    const port = process.env.PORT || 3000;
+
+    return app.listen(port, () => {
+        console.log(`Server is running on http://localhost:${port}`);
     });
 }
-
-if (require.main === module) {
-    start();
-}
-
+start();

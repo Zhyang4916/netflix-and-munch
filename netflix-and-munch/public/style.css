@@ -1,5 +1,5 @@
 body {
-    background-color: #f8c713;
+    background-color: #F3E9DC;
     font-family: 'Cooper BT', sans-serif;
     color: #222;
 }
@@ -29,7 +29,7 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 20px 40px;
-    background: rgb(232, 207, 140);
+    background: #D96F32;
     backdrop-filter: blur(6px);
     /*position: sticky; removed to prevent hiding issues*/
     border-bottom: 2px solid rgba(0,0,0,0.1);
@@ -76,7 +76,7 @@ header {
 }
 
 .main-button {
-    background-color: rgb(232, 207, 140);
+    background-color: #D96F32;
     color: black;
     padding: 15px 30px;
     border: 2px solid  rgb(232, 207, 140);
@@ -192,4 +192,15 @@ header {
     font-weight: 350;
     margin-bottom: 0.5px;
     font-family: 'Cooper BT', sans-serif;
+}
+
+.recipe-instructions-ol {
+    padding-left: 30px; 
+    list-style-type: none; 
+}
+
+.recipe-instructions-ol li {
+    margin-bottom: 15px; 
+    line-height: 1.5;    
+    font-size: 1.1em;
 }
