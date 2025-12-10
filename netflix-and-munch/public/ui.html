@@ -8,17 +8,20 @@
 </head>
 <body>
     <header>
-        <h1 class="title">Netflix & Munch</h1>
+        <h1 id="title">Netflix & Munch</h1>
         <nav>
             <a href="#" id="nav-all-recipes">All Recipes</a>
             <a href="#" id="nav-find-recipe">Find A Recipe</a>
             <a href="#" id="nav-about-us">About Us</a>
         </nav>
     </header>
-    <main> 
+    <main> <!--main-->
         <section id="homepage-main">
             <div class="main-content">
                 <p class="main-sentence"> Delicious food for every movie night </p>
+                <img src="hp_image.png" class='background_photo'alt="ratatouille"/>
+                <!--to-do: style this image so it is behind the homepage text and button
+                like behind the text-->
                 <div class="main-buttons">
                     <button id="all-recipes-button" class="main-button">All Recipes</button>
                     <button id="find-recipe-button" class="main-button">Find A Recipe</button>
@@ -30,6 +33,7 @@
         <section id="search" class="hidden">
             <div class="search-container">
                 <h1>Find Your Iconic Recipe</h1>
+                <!--To-do: I can't see this search bar or writing when I click on 'find a recipe'-->
                 <input type="text" id="movie-search" placeholder="Search for a recipe or movie title... (e.g., Harry Potter)">
                 <button id="search-button">Find Recipe</button>
             </div>
@@ -41,7 +45,21 @@
                 </div>
         </section>
 
-    </main>
+        <section id="all-recipes" class="hidden">
+            <h2>All Recipes</h2>
+            <div id="all-recipes-container">
+            </div>
+        </section>
+
+        <section id="about-us" class="hidden about-container">
+            <h2>About Us</h2>
+            <div class="about-info">
+            <img src="aboutus_image.png" class="about-image "/>
+            <p> We created Netflix & Munch to help you find iconic food from or inspired by your favorite movies!</p>
+            </div>
+        </section>
+
+    </main> <!--end main-->
     <script src="ux.js"></script>
 </body>
 </html>

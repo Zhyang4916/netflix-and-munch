@@ -2,16 +2,28 @@ document.addEventListener('DOMContentLoaded', ()=> {
     const homepage = document.getElementById('homepage-main');
     const searchButton = document.getElementById('search-button');
     const searchInput = document.getElementById('movie-search');
-    const resultsContainer = document.getElementById('reciple-results');
+    const resultsContainer = document.getElementById('recipe-results');
     const searchView = document.getElementById('search');
     const resultsView = document.getElementById('results');
     const findRecipeButton = document.getElementById('find-recipe-button');
     const navFindRecipe = document.getElementById('nav-find-recipe');
+    const allRecipesView = document.getElementById("all-recipes");
+    const aboutUsView = document.getElementById("about-us");
+    const titleHome = document.getElementById("title");
+    const navAllRecipes = document.getElementById("nav-all-recipes");
+    const navAboutUs = document.getElementById("nav-about-us");
+    const allRecipesButton = document.getElementById("all-recipes-button");
+    const aboutUsButton = document.getElementById("about-us-button");
+
+
 
     function showView(viewElement) {
         homepage.classList.add('hidden');
         searchView.classList.add('hidden');
         resultsView.classList.add('hidden');
+        allRecipesView.classList.add('hidden');
+        aboutUsView.classList.add('hidden');
+        
         viewElement.classList.remove('hidden');
     }
 
@@ -82,4 +94,31 @@ document.addEventListener('DOMContentLoaded', ()=> {
         `;
     }
     searchButton.addEventListener('click', handleSearch);
+/*event listeners for navigation bar */
+    titleHome.addEventListener('click', () => {
+        showView(homepage);
+    });
+    navFindRecipe.addEventListener('click', (event) => {
+        event.preventDefault();
+        showView(searchView);
+    });
+    navAllRecipes.addEventListener('click', (event) => {
+        event.preventDefault();
+        showView(allRecipesView);
+    });
+    navAboutUs.addEventListener('click', (event) => {
+        showView(aboutUsView);
+    });
+
+/*event listeners for homepage black buttons */
+    allRecipesButton.addEventListener("click", () => {
+        showView(allRecipesView);
+    });
+    findRecipeButton.addEventListener("click", () => {
+        showView(searchView);
+    });
+    aboutUsButton.addEventListener("click", () => {
+        showView(aboutUsView);
+    });
+
 });
