@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
     const navAboutUs = document.getElementById("nav-about-us");
     const allRecipesButton = document.getElementById("all-recipes-button");
     const aboutUsButton = document.getElementById("about-us-button");
-
+    const mainHeader = document.getElementById('main-header');
 
 
     function showView(viewElement) {
@@ -23,6 +23,12 @@ document.addEventListener('DOMContentLoaded', ()=> {
         resultsView.classList.add('hidden');
         allRecipesView.classList.add('hidden');
         aboutUsView.classList.add('hidden');
+
+        if (viewElement === homepage) {
+            mainHeader.classList.add('hidden');
+        } else {
+            mainHeader.classList.remove('hidden');
+        }
         
         viewElement.classList.remove('hidden');
     }
@@ -81,7 +87,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
         
         resultsContainer.innerHTML = `
             <div class="recipe-detail">
-                <h2>${recipe.foodName} from ${recipe.movie}</h2>
+                <h2>${recipe.foodName} (from ${recipe.movie})</h2>
                 <img src="${recipe.image}" alt="${recipe.foodName}" class="recipe-image">
                 <p class="recipe-cuisine">Cuisine: ${recipe.cuisine} (${recipe.cuisineTag})</p>
                 
@@ -105,6 +111,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
     navAllRecipes.addEventListener('click', (event) => {
         event.preventDefault();
         showView(allRecipesView);
+        loadAllRecipesView();
     });
     navAboutUs.addEventListener('click', (event) => {
         showView(aboutUsView);
@@ -113,6 +120,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
 /*event listeners for homepage black buttons */
     allRecipesButton.addEventListener("click", () => {
         showView(allRecipesView);
+        loadAllRecipesView();
     });
     findRecipeButton.addEventListener("click", () => {
         showView(searchView);
@@ -124,5 +132,53 @@ document.addEventListener('DOMContentLoaded', ()=> {
 /*fetch the api */
 fetch("/api/all-recipes")
 fetch(`/api/recipe?movie=${encodeURIComponent(title)}`)
+
+async function loadAllRecipesView() {
+    const allRecipesContainer = document.getElementById('all-recipes-container');
+    allRecipesContainer.innerHTML = '<h2>Loading recipes...</h2>';
+
+    try {
+        //Calls the server.js route for all recipes
+        const response = await fetch('/api/all-recipes');
+        if (!response.ok) throw new Error('Failed to load all recipes.');
+
+        const recipes = await response.json(); 
+        if (recipes.length === 0) {
+            allRecipesContainer.innerHTML = '<p>No recipes has been added to the database yet :( </p>';
+            return;
+        }
+
+        allRecipesContainer.innerHTML = '<h3>Available Movie Food Pairings:</h3>';
+        const grid = document.createElement('div');
+        grid.className = 'recipe-grid';
+        
+        recipes.forEach(recipe => {
+            const card = document.createElement('div');
+            card.className = 'recipe-all-card';
+            card.innerHTML = `
+                <img src="${recipe.image}" alt="${recipe.foodName}" style="width:100%; height:150px; object-fit:cover; border-radius: 8px;">
+                <h4>${recipe.movie}</h4>
+                <p>(${recipe.foodName})</p>
+                <button class="view-recipe-btn" data-movie="${recipe.movie}">View Recipe</button>
+            `;
+            grid.appendChild(card);
+        });
+        allRecipesContainer.appendChild(grid);
+
+        //Attach event listener to grid for clicks
+        grid.addEventListener('click', (e) => {
+            if (e.target.classList.contains('view-recipe-btn')) {
+                const movie = e.target.getAttribute('data-movie');
+                document.getElementById('movie-search').value = movie; 
+                handleSearch(); 
+            }
+        });
+
+    } catch (error) {
+        allRecipesContainer.innerHTML = `<p class="error-message">Could not load recipes: ${error.message}</p>`;
+    }
+}
+
+showView(homepage);
 
 });

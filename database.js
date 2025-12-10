@@ -3,7 +3,7 @@ const dbConnectionUrl = "mongodb+srv://zhyang29_db_user:cm1THdB8xaxdonmi@cluster
 const dbName = "netflix-munch-db";
 const movieMappingSchema = new mongoose.Schema({
     title: { type: String, required: true},
-    Food: { type: String, required: true },
+    food: { type: String, required: true },
     cuisineTag: String,
 });
 
