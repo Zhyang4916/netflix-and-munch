@@ -121,4 +121,8 @@ document.addEventListener('DOMContentLoaded', ()=> {
         showView(aboutUsView);
     });
 
+/*fetch the api */
+fetch("/api/all-recipes")
+fetch(`/api/recipe?movie=${encodeURIComponent(title)}`)
+
 });
